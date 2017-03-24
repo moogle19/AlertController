@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlertController
 
 class ViewController: UIViewController {
 
@@ -20,41 +19,51 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func viewDidAppear(animated: Bool) {
+
+    override func viewDidAppear(_ animated: Bool) {
 
     }
-    
+
     func presentAlertControllerWithTwoButtons() {
-        
-        let alertController = AlertController(title: "Title", message: "Lorem Ipsum", icon: nil, preferredStyle: UIAlertControllerStyle.Alert, blurStyle: .ExtraLight)
-        
-        alertController.addAction(AlertAction(title: "Default", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-        
-        }))
-        
-        alertController.addAction(AlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
-          
-        }))
-        
-        self.presentViewController(alertController, animated: true) { () -> Void in
-            
+
+        let alertController = AlertController(
+            title: "Title",
+            message: "Lorem Ipsum",
+            icon: nil,
+            preferredStyle: .alert,
+            blurStyle: .extraLight
+        )
+
+        alertController.addAction(
+            action: AlertAction(title: "Default", style: .default, handler: nil)
+        )
+
+        alertController.addAction(
+            action: AlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        self.present(alertController, animated: true) { () -> Void in
+
         }
     }
-    
+
     func presentAlertControllerWithButtonsAndTextField() {
-        
-        let alertController = AlertController(title: "Title", message: "Lorem Ipsum", icon: nil, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        alertController.addAction(AlertAction(title: "Default", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+
+        let alertController = AlertController(
+            title: "Title",
+            message: "Lorem Ipsum",
+            icon: nil,
+            preferredStyle: .alert
+        )
+
+        alertController.addAction(action: AlertAction(title: "Default", style: .default, handler: { (action) -> Void in
             
         }))
         
-        alertController.addAction(AlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+        alertController.addAction(action: AlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
             
         }))
         
-        alertController.addAction(AlertAction(title: "Destructive", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
+        alertController.addAction(action: AlertAction(title: "Destructive", style: .destructive, handler: { (action) -> Void in
             
         }))
         
@@ -62,24 +71,24 @@ class ViewController: UIViewController {
             
         }
         
-        self.presentViewController(alertController, animated: true) { () -> Void in
+        self.present(alertController, animated: true) { () -> Void in
             
         }
     }
     
     func presentAlertControllerWithIcon() {
         
-        let alertController = AlertController(title: "Title", message: "Lorem Ipsum", icon: UIImage(named: "Icon"), preferredStyle: UIAlertControllerStyle.Alert, blurStyle: .Dark)
+        let alertController = AlertController(title: "Title", message: "Lorem Ipsum", icon: UIImage(named: "Icon"), preferredStyle: UIAlertControllerStyle.alert, blurStyle: .dark)
         
-        alertController.addAction(AlertAction(title: "Default", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+        alertController.addAction(action: AlertAction(title: "Default", style: .default, handler: { (action) -> Void in
             
         }))
         
-        alertController.addAction(AlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+        alertController.addAction(action: AlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
             
         }))
         
-        alertController.addAction(AlertAction(title: "Destructive", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
+        alertController.addAction(action: AlertAction(title: "Destructive", style: .destructive, handler: { (action) -> Void in
             
         }))
         
@@ -87,45 +96,45 @@ class ViewController: UIViewController {
             
         }
         
-        self.presentViewController(alertController, animated: true) { () -> Void in
+        present(alertController, animated: true) { () -> Void in
             
         }
     }
     
     func presentAlertControllerWithActionSheetStyle() {
         
-        let alertController = AlertController(title: "Title", message: "Lorem Ipsum", icon: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alertController = AlertController(title: "Title", message: "Lorem Ipsum", icon: nil, preferredStyle: .actionSheet)
         
-        alertController.addAction(AlertAction(title: "Default", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+        alertController.addAction(action: AlertAction(title: "Default", style: .default, handler: { (action) -> Void in
             
         }))
         
-        alertController.addAction(AlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+        alertController.addAction(action: AlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
             
         }))
         
-        alertController.addAction(AlertAction(title: "Destructive", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
+        alertController.addAction(action: AlertAction(title: "Destructive", style: .destructive, handler: { (action) -> Void in
             
         }))
         
-        self.presentViewController(alertController, animated: true) { () -> Void in
+        present(alertController, animated: true) { () -> Void in
             
         }
     }
     
-    @IBAction func exampleButton1Tapped(sender: AnyObject) {
+    @IBAction func exampleButton1Tapped(_ sender: AnyObject) {
         presentAlertControllerWithTwoButtons()
     }
     
-    @IBAction func exampleButton2Tapped(sender: AnyObject) {
+    @IBAction func exampleButton2Tapped(_ sender: AnyObject) {
         presentAlertControllerWithButtonsAndTextField()
     }
     
-    @IBAction func exampleButton3Tapped(sender: AnyObject) {
+    @IBAction func exampleButton3Tapped(_ sender: AnyObject) {
         presentAlertControllerWithIcon()
     }
     
-    @IBAction func exampleButton4Tapped(sender: AnyObject) {
+    @IBAction func exampleButton4Tapped(_ sender: AnyObject) {
         presentAlertControllerWithActionSheetStyle()
     }
 }

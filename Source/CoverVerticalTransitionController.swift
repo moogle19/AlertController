@@ -22,39 +22,39 @@ class CoverVerticalTransitionController: UIViewController, AlertTransitionContro
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    internal func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         
         return 1
     }
     
-    internal func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    internal func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
-        if mode == .Show {
+        if mode == .show {
             
-            self.animateShowTransition(transitionContext)
+            self.animateShowTransition(transitionContext: transitionContext)
             
         } else {
             
-            self.animateHideTransition(transitionContext)
+            self.animateHideTransition(transitionContext: transitionContext)
         }
     }
     
     private func animateShowTransition(transitionContext: UIViewControllerContextTransitioning) {
         
-        let containerView = transitionContext.containerView();
+        let containerView = transitionContext.containerView;
         
-        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as! AlertController
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! AlertController
         toViewController.view.frame = fromViewController!.view.frame
         toViewController.contentWrapper.alpha = 0;
-        toViewController.contentWrapper.transform = CGAffineTransformTranslate(toViewController.contentWrapper.transform, 0,toViewController.view.frame.height)
+        toViewController.contentWrapper.transform = toViewController.contentWrapper.transform.translatedBy(x: 0,y: toViewController.view.frame.height)
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.3, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.3, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
             
             toViewController.contentWrapper.alpha = 1;
-            toViewController.contentWrapper.transform = CGAffineTransformTranslate(toViewController.contentWrapper.transform, 0, -toViewController.view.frame.height)
+            toViewController.contentWrapper.transform = toViewController.contentWrapper.transform.translatedBy(x: 0, y: -toViewController.view.frame.height)
             toViewController.view.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.6)
-            containerView!.addSubview(toViewController.view)
+            containerView.addSubview(toViewController.view)
             
             }, completion: { (completed) -> Void in
                 transitionContext.completeTransition(completed)
@@ -65,15 +65,15 @@ class CoverVerticalTransitionController: UIViewController, AlertTransitionContro
     
     private func animateHideTransition(transitionContext: UIViewControllerContextTransitioning) {
         
-        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! AlertController
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! AlertController
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
         toViewController!.view.frame = fromViewController.view.frame
         
         fromViewController.view.backgroundColor = UIColor(red:1, green:1, blue:1, alpha:0.0)
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.3, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.3, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
             fromViewController.view.alpha = 0;
-            fromViewController.view.transform = CGAffineTransformTranslate(fromViewController.view.transform, 0,fromViewController.view.frame.height)
+            fromViewController.view.transform = fromViewController.view.transform.translatedBy(x: 0,y: fromViewController.view.frame.height)
             
             }, completion: { (completed) -> Void in
                 fromViewController.view.removeFromSuperview()

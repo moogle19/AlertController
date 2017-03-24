@@ -1,11 +1,11 @@
 // https://github.com/Quick/Quick
 
-import Quick
-import Nimble
-import AlertController
+//import Quick
+//import Nimble
+//import AlertController
 
-class TableOfContentsSpec: QuickSpec {
-    override func spec() {
+//class TableOfContentsSpec: QuickSpec {
+//    override func spec() {
 //        describe("these will fail") {
 //
 //            it("can do maths") {
@@ -46,5 +46,5 @@ class TableOfContentsSpec: QuickSpec {
 //                }
 //            }
 //        }
-    }
-}
+//    }
+//}
