@@ -31,8 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A1582991E853E710032183D /* AlertButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertButton.swift; sourceTree = "<group>"; };
-		0A15829B1E853E9C0032183D /* AlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
+		0A1582991E853E710032183D /* AlertButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertButton.swift; path = ../../Source/AlertButton.swift; sourceTree = "<group>"; };
+		0A15829B1E853E9C0032183D /* AlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertAction.swift; path = ../../Source/AlertAction.swift; sourceTree = "<group>"; };
 		0ACFBB211E84F99C00CE967E /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertController.swift; path = ../../Source/AlertController.swift; sourceTree = "<group>"; };
 		0ACFBB221E84F99C00CE967E /* CoverVerticalTransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoverVerticalTransitionController.swift; path = ../../Source/CoverVerticalTransitionController.swift; sourceTree = "<group>"; };
 		0ACFBB231E84F99C00CE967E /* PopupTransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopupTransitionController.swift; path = ../../Source/PopupTransitionController.swift; sourceTree = "<group>"; };
