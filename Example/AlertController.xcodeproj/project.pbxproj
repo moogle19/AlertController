@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A15829A1E853E710032183D /* AlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1582991E853E710032183D /* AlertButton.swift */; };
+		0A15829C1E853E9C0032183D /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A15829B1E853E9C0032183D /* AlertAction.swift */; };
 		0ACFBB251E84F99C00CE967E /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACFBB211E84F99C00CE967E /* AlertController.swift */; };
 		0ACFBB261E84F99C00CE967E /* CoverVerticalTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACFBB221E84F99C00CE967E /* CoverVerticalTransitionController.swift */; };
 		0ACFBB271E84F99C00CE967E /* PopupTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACFBB231E84F99C00CE967E /* PopupTransitionController.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A1582991E853E710032183D /* AlertButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertButton.swift; sourceTree = "<group>"; };
+		0A15829B1E853E9C0032183D /* AlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
 		0ACFBB211E84F99C00CE967E /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertController.swift; path = ../../Source/AlertController.swift; sourceTree = "<group>"; };
 		0ACFBB221E84F99C00CE967E /* CoverVerticalTransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoverVerticalTransitionController.swift; path = ../../Source/CoverVerticalTransitionController.swift; sourceTree = "<group>"; };
 		0ACFBB231E84F99C00CE967E /* PopupTransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopupTransitionController.swift; path = ../../Source/PopupTransitionController.swift; sourceTree = "<group>"; };
@@ -65,6 +69,8 @@
 		0ACFBB201E84F99100CE967E /* AlertController */ = {
 			isa = PBXGroup;
 			children = (
+				0A15829B1E853E9C0032183D /* AlertAction.swift */,
+				0A1582991E853E710032183D /* AlertButton.swift */,
 				0ACFBB211E84F99C00CE967E /* AlertController.swift */,
 				0ACFBB221E84F99C00CE967E /* CoverVerticalTransitionController.swift */,
 				0ACFBB231E84F99C00CE967E /* PopupTransitionController.swift */,
@@ -253,9 +259,11 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				0ACFBB271E84F99C00CE967E /* PopupTransitionController.swift in Sources */,
+				0A15829A1E853E710032183D /* AlertButton.swift in Sources */,
 				0ACFBB251E84F99C00CE967E /* AlertController.swift in Sources */,
 				0ACFBB261E84F99C00CE967E /* CoverVerticalTransitionController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				0A15829C1E853E9C0032183D /* AlertAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

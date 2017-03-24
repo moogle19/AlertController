@@ -29,11 +29,12 @@ class ViewController: UIViewController {
         let alertController = AlertController(
             title: "Title",
             message: "Lorem Ipsum",
-            blurStyle: .extraLight
+            blurStyle: .extraLight,
+            tintColor: .blue
         )
 
         alertController.addAction(
-            action: AlertAction(title: "Default", style: .default, handler: nil)
+            action: AlertAction(title: "Default", style: .default, tintColor: .yellow, handler: nil)
         )
 
         alertController.addAction(

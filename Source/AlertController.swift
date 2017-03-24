@@ -9,96 +9,14 @@
 import UIKit
 
 public enum AlertTransitionStyle {
-
     case coverVertical
     case popup
-}
-
-public class AlertAction: NSObject {
-
-    public final var title: String?
-    public final var style: UIAlertActionStyle
-    public final var handler: ((AlertAction) -> Void)?
-
-    public init(
-        title: String?,
-        style: UIAlertActionStyle = .default,
-        handler: ((AlertAction) -> Void)? = nil
-    ) {
-
-        self.title = title
-        self.style = style
-        self.handler = handler
-
-        super.init()
-
-    }
-}
-
-// Button sub-class
-public class AlertButton: UIButton {
-
-    public final var alertAction: AlertAction?
-    public final var highlightColor: UIColor = UIColor(white: 1, alpha: 0.4)
-
-    public init() {
-        super.init(frame: .zero)
-        setup()
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-
-    private final func setup() {
-        backgroundColor = .clear
-    }
-
-    public override func layoutSubviews() {
-
-        super.layoutSubviews()
-
-    }
-
-    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-        super.touchesBegan(touches, with: event)
-
-        backgroundColor = highlightColor
-
-    }
-
-    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-        super.touchesEnded(touches, with: event)
-
-        backgroundColor = .clear
-    }
-
-    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-        super.touchesCancelled(touches, with: event)
-
-        backgroundColor = .clear
-
-    }
-
-    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-        super.touchesMoved(touches, with: event)
-
-    }
 }
 
 public class AlertController: UIViewController {
 
     // MARK: - Public Interface
+    public final var tintColor: UIColor?
     public final var transitionStyle: AlertTransitionStyle
     public final var contentWrapper = UIView()
 
@@ -109,7 +27,8 @@ public class AlertController: UIViewController {
         message: String? = nil,
         icon: UIImage? = nil,
         preferredStyle: UIAlertControllerStyle = .alert,
-        blurStyle: UIBlurEffectStyle = .light
+        blurStyle: UIBlurEffectStyle = .light,
+        tintColor: UIColor? = nil
     ) {
 
         alertTitle = title
@@ -117,6 +36,7 @@ public class AlertController: UIViewController {
         self.icon = icon
         self.preferredStyle = preferredStyle
         self.blurStyle = blurStyle
+        self.tintColor = tintColor
 
         titleLabel.text = alertTitle
         textTextView.text = message
@@ -152,18 +72,8 @@ public class AlertController: UIViewController {
         headerAreaView.addSubview(headerAreaSeperator)
         headerAreaSeperator.backgroundColor = separatorColor
 
-        // Title
-        titleLabel.numberOfLines = 1
-        titleLabel.textAlignment = .center
-        titleLabel.font = .systemFont(ofSize: 18, weight: UIFontWeightMedium)
         headerAreaView.addSubview(titleLabel)
 
-        // Text
-        textTextView.isEditable = false
-        textTextView.textAlignment = .center
-        textTextView.textContainerInset = .zero
-        textTextView.textContainer.lineFragmentPadding = 0
-        textTextView.font = .systemFont(ofSize: 14)
         headerAreaView.addSubview(textTextView)
 
         // Icon
@@ -194,13 +104,12 @@ public class AlertController: UIViewController {
 
     // MARK: Configuring the User Actions
 
-    public final var actions: [AlertAction] {
-        return alertActions
-    }
+    public final private(set) var actions: [AlertAction] = [AlertAction]()
 
     public final func addAction(action: AlertAction) {
 
-        alertActions.append(action)
+        actions.append(action)
+
         let button = buttonForAction(action: action)
 
         // save button
@@ -225,6 +134,7 @@ public class AlertController: UIViewController {
             buttonSeparators.append(separator)
             buttonAreaView.addSubview(separator)
         }
+
     }
 
     // MARK: Configuring Text Fields
@@ -276,16 +186,34 @@ public class AlertController: UIViewController {
     private final var message: String?
     private final var icon: UIImage?
 
-    // MARK: Actions
-    private final var alertActions = [AlertAction]()
-
     // MARK: Style
     private final var preferredStyle: UIAlertControllerStyle
+
     private final var blurStyle: UIBlurEffectStyle
 
     // MARK: - Views
-    private final var titleLabel = UILabel()
-    private final var textTextView = UITextView()
+    private final var titleLabel: UILabel = {
+        let label = UILabel()
+
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: UIFontWeightMedium)
+
+        return label
+    }()
+
+    private final var textTextView: UITextView = {
+        let textView = UITextView()
+
+        textView.isEditable = false
+        textView.textAlignment = .center
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0
+        textView.font = .systemFont(ofSize: 14)
+
+        return textView
+    }()
+
     private final var iconView = UIView()
     private final var topBlurView: UIVisualEffectView
     private final var bottomBlurView: UIVisualEffectView
@@ -678,26 +606,17 @@ public class AlertController: UIViewController {
 
     private final func buttonForAction(action: AlertAction) -> AlertButton {
 
-        let globalTint = UIApplication.shared.delegate?.window??.tintColor ?? .white
+        let tint = action.tintColor ?? tintColor ?? UIApplication.shared.delegate?.window??.tintColor ?? .white
 
-        let button = AlertButton()
-        button.setTitle(action.title, for: .normal)
-        button.highlightColor = separatorColor
-        button.alertAction = action
+        let button = AlertButton(
+            title: action.title,
+            highlightColor: separatorColor,
+            action: action,
+            tintColor: tint,
+            style: action.style
+        )
+
         button.addTarget(self, action: #selector(buttonTapped(button:)), for: .touchUpInside)
-
-        switch action.style {
-
-        case .cancel:
-            button.setTitleColor(globalTint, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 18, weight: UIFontWeightMedium)
-        case .default:
-            button.setTitleColor(globalTint, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 18, weight: UIFontWeightRegular)
-        case .destructive:
-            button.setTitleColor(.red, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 18, weight: UIFontWeightRegular)
-        }
 
         return button
 

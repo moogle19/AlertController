@@ -9,7 +9,6 @@
 import UIKit
 
 enum AlertTransitionControllerMode {
-
     case show
     case hide
 }
@@ -17,6 +16,7 @@ enum AlertTransitionControllerMode {
 protocol AlertTransitionController {
 
     init(mode: AlertTransitionControllerMode)
+
 }
 
 class PopupTransitionController: UIViewController, AlertTransitionController {
@@ -34,7 +34,7 @@ class PopupTransitionController: UIViewController, AlertTransitionController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    fileprivate func animateShowTransition(transitionContext: UIViewControllerContextTransitioning) {
+    fileprivate func animateShow(using transitionContext: UIViewControllerContextTransitioning) {
 
         let containerView = transitionContext.containerView
 
@@ -61,7 +61,7 @@ class PopupTransitionController: UIViewController, AlertTransitionController {
             animations: { () -> Void in
                 toViewController.contentWrapper.alpha = 1
                 toViewController.contentWrapper.transform = CGAffineTransform(scaleX: 1, y: 1)
-                toViewController.view.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.6)
+                toViewController.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
                 containerView.addSubview(toViewController.view)
             }, completion: { (completed) -> Void in
                 transitionContext.completeTransition(completed)
@@ -71,23 +71,23 @@ class PopupTransitionController: UIViewController, AlertTransitionController {
 
     }
 
-    fileprivate func animateHideTransition(transitionContext: UIViewControllerContextTransitioning) {
+    fileprivate func animateHide(using transitionContext: UIViewControllerContextTransitioning) {
 
         guard let fromViewController = transitionContext
-            .viewController(forKey: UITransitionContextViewControllerKey.from) as? AlertController
+            .viewController(forKey: .from) as? AlertController
         else {
             return
         }
 
         guard let toViewController = transitionContext
-            .viewController(forKey: UITransitionContextViewControllerKey.to)
+            .viewController(forKey: .to)
         else {
             return
         }
 
         toViewController.view.frame = fromViewController.view.frame
 
-        fromViewController.view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.0)
+        fromViewController.view.backgroundColor = UIColor.white.withAlphaComponent(0.0)
 
         UIView.animate(
             withDuration: 0.5,
@@ -97,7 +97,7 @@ class PopupTransitionController: UIViewController, AlertTransitionController {
             options: .curveEaseIn,
             animations: { () -> Void in
                 fromViewController.view.alpha = 0
-                fromViewController.view.transform = CGAffineTransform(scaleX: 0.001, y: 0.0001)
+                fromViewController.view.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
             }, completion: { (completed) -> Void in
                 fromViewController.view.removeFromSuperview()
                 transitionContext.completeTransition(completed)
@@ -119,11 +119,11 @@ extension PopupTransitionController: UIViewControllerAnimatedTransitioning {
 
         if mode == .show {
 
-            animateShowTransition(transitionContext: transitionContext)
+            animateShow(using: transitionContext)
 
         } else {
 
-            animateHideTransition(transitionContext: transitionContext)
+            animateHide(using: transitionContext)
         }
     }
 
