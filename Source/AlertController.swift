@@ -16,11 +16,15 @@ public enum AlertTransitionStyle {
 
 public class AlertAction: NSObject {
 
-    var title: String?
-    var style: UIAlertActionStyle
-    var handler: ((AlertAction) -> Void)?
+    public final var title: String?
+    public final var style: UIAlertActionStyle
+    public final var handler: ((AlertAction) -> Void)?
 
-    public init(title: String?, style: UIAlertActionStyle, handler: ((AlertAction) -> Void)? = nil) {
+    public init(
+        title: String?,
+        style: UIAlertActionStyle = .default,
+        handler: ((AlertAction) -> Void)? = nil
+    ) {
 
         self.title = title
         self.style = style
@@ -34,20 +38,26 @@ public class AlertAction: NSObject {
 // Button sub-class
 public class AlertButton: UIButton {
 
-    var alertAction: AlertAction?
-    var highlightColor: UIColor! = UIColor(white: 1, alpha: 0.4)
+    public final var alertAction: AlertAction?
+    public final var highlightColor: UIColor = UIColor(white: 1, alpha: 0.4)
 
     public init() {
         super.init(frame: .zero)
-        backgroundColor = .clear
+        setup()
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        super.init(coder:aDecoder)
+        super.init(coder: aDecoder)
+        setup()
     }
 
     override public init(frame: CGRect) {
-        super.init(frame:frame)
+        super.init(frame: frame)
+        setup()
+    }
+
+    private final func setup() {
+        backgroundColor = .clear
     }
 
     public override func layoutSubviews() {
@@ -86,19 +96,19 @@ public class AlertButton: UIButton {
     }
 }
 
-public class AlertController: UIViewController, UITextFieldDelegate {
+public class AlertController: UIViewController {
 
     // MARK: - Public Interface
-    public var transitionStyle: AlertTransitionStyle
-    public var contentWrapper = UIView()
+    public final var transitionStyle: AlertTransitionStyle
+    public final var contentWrapper = UIView()
 
     // MARK: Init
 
     public init(
         title: String?,
-        message: String?,
-        icon: UIImage?,
-        preferredStyle: UIAlertControllerStyle,
+        message: String? = nil,
+        icon: UIImage? = nil,
+        preferredStyle: UIAlertControllerStyle = .alert,
         blurStyle: UIBlurEffectStyle = .light
     ) {
 
@@ -154,7 +164,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
         textTextView.textContainerInset = .zero
         textTextView.textContainer.lineFragmentPadding = 0
         textTextView.font = .systemFont(ofSize: 14)
-        self.headerAreaView.addSubview(textTextView)
+        headerAreaView.addSubview(textTextView)
 
         // Icon
         if let icon = icon {
@@ -184,11 +194,11 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     // MARK: Configuring the User Actions
 
-    public var actions: [AlertAction] {
+    public final var actions: [AlertAction] {
         return alertActions
     }
 
-    public func addAction(action: AlertAction) {
+    public final func addAction(action: AlertAction) {
 
         alertActions.append(action)
         let button = buttonForAction(action: action)
@@ -219,7 +229,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     // MARK: Configuring Text Fields
 
-    public func addTextFieldWithConfigurationHandler(configurationHandler: ((UITextField) -> Void)?) {
+    public final func addTextFieldWithConfigurationHandler(configurationHandler: ((UITextField) -> Void)?) {
 
         let textField = UITextField()
         textField.textColor = .white
@@ -240,7 +250,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
         configurationHandler?(textField)
     }
 
-    public var textFields: [UITextField] {
+    public final var textFields: [UITextField] {
         return _textFields
     }
 
@@ -249,67 +259,67 @@ public class AlertController: UIViewController, UITextFieldDelegate {
     // MARK: Private Properties
 
     // Positioning
-    private var isKeyboardShown = false
-    private var tmpContentViewFrameOrigin: CGPoint?
-    private var activeField: UITextField?
+    private final var isKeyboardShown = false
+    private final var tmpContentViewFrameOrigin: CGPoint?
+    fileprivate final var activeField: UITextField?
 
     private var isPresenting = false
 
     // MARK: Constants
-    private let topContentVSpace: CGFloat = 10.0
-    private let titleHeight: CGFloat = 40.0
-    private let buttonHeight: CGFloat = 45.0
-    private let textFieldHeight: CGFloat = 30.0
+    private final let topContentVSpace: CGFloat = 10.0
+    private final let titleHeight: CGFloat = 40.0
+    private final let buttonHeight: CGFloat = 45.0
+    private final let textFieldHeight: CGFloat = 30.0
 
     // MARK: Content
-    private var alertTitle: String?
-    private var message: String?
-    private var icon: UIImage?
+    private final var alertTitle: String?
+    private final var message: String?
+    private final var icon: UIImage?
 
     // MARK: Actions
-    private var alertActions = [AlertAction]()
+    private final var alertActions = [AlertAction]()
 
     // MARK: Style
-    private var preferredStyle: UIAlertControllerStyle
-    private var blurStyle: UIBlurEffectStyle
+    private final var preferredStyle: UIAlertControllerStyle
+    private final var blurStyle: UIBlurEffectStyle
 
     // MARK: - Views
-    private var titleLabel = UILabel()
-    private var textTextView = UITextView()
-    private var iconView = UIView()
-    private var topBlurView: UIVisualEffectView
-    private var bottomBlurView: UIVisualEffectView
-    private var headerAreaView = UIView()
-    private var buttonAreaView = UIView()
-    private var headerAreaSeperator = UIView()
+    private final var titleLabel = UILabel()
+    private final var textTextView = UITextView()
+    private final var iconView = UIView()
+    private final var topBlurView: UIVisualEffectView
+    private final var bottomBlurView: UIVisualEffectView
+    private final var headerAreaView = UIView()
+    private final var buttonAreaView = UIView()
+    private final var headerAreaSeperator = UIView()
 
-    private var buttons = [AlertButton]()
-    private var cancelButton: AlertButton?
-    private var _textFields = [UITextField]()
-    private var buttonSeparators = [UIView]()
+    private final var buttons = [AlertButton]()
+    private final var cancelButton: AlertButton?
+    private final var _textFields = [UITextField]()
+    private final var buttonSeparators = [UIView]()
 
     // MARK: Computed properties
-    private var window: UIWindow {
+    private final var window: UIWindow {
         return UIApplication.shared.keyWindow ?? UIWindow()
     }
 
-    private var screenSize: CGSize {
+    private final var screenSize: CGSize {
         return window.frame.size
     }
 
-    private var iconSize: CGSize {
+    private final var iconSize: CGSize {
         return icon?.size ?? .zero
     }
 
-    private var alertBoxWidth: CGFloat {
+    private final var alertBoxWidth: CGFloat {
         return self.preferredStyle == .alert ? 280 : screenSize.width - 24
     }
 
-    private var viewTextWidth: CGFloat {
+    private final var viewTextWidth: CGFloat {
         return alertBoxWidth - 24
     }
 
-    private var viewTextHeight: CGFloat {
+    private final var viewTextHeight: CGFloat {
 
         // computing the right size to use for the textView
         let maxHeight = screenSize.height - 100 // max overall height
@@ -323,7 +333,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
         return min(suggestedViewTextSize.height, maxViewTextHeight)
     }
 
-    private var fontColor: UIColor {
+    private final var fontColor: UIColor {
 
         if blurStyle == .extraLight {
             return .black
@@ -333,7 +343,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    private var separatorColor: UIColor {
+    private final var separatorColor: UIColor {
 
         if blurStyle == .dark {
             return UIColor(red: 1, green: 1, blue: 1, alpha: 0.05)
@@ -343,19 +353,19 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    private var separatorHeight: CGFloat {
+    private final var separatorHeight: CGFloat {
 
         return 0.5
 
     }
 
-    private var actionSheetCancelButtonSpacer: CGFloat {
+    private final var actionSheetCancelButtonSpacer: CGFloat {
 
         return displayAsActionSheetWithCancel ? 12 : 0
 
     }
 
-    private var textFieldBackgroundColor: UIColor {
+    private final var textFieldBackgroundColor: UIColor {
 
         if blurStyle == .dark {
             return UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
@@ -365,31 +375,31 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    private var textFieldFontColor: UIColor {
+    private final var textFieldFontColor: UIColor {
 
         return blurStyle == .extraLight ? .black : .white
 
     }
 
-    private var textFieldKeyboardAppearance: UIKeyboardAppearance {
+    private final var textFieldKeyboardAppearance: UIKeyboardAppearance {
 
         return blurStyle == .extraLight ? .light : .dark
 
     }
 
-    private var displayAsActionSheetWithCancel: Bool {
+    private final var displayAsActionSheetWithCancel: Bool {
 
         return cancelButton != nil && preferredStyle == .actionSheet
 
     }
 
-    private var displayAsAlertWithFullButtons: Bool {
+    private final var displayAsAlertWithFullButtons: Bool {
 
         return preferredStyle == .alert && buttons.count > 2
 
     }
 
-    private var displayAsActionSheet: Bool {
+    private final var displayAsActionSheet: Bool {
 
         return preferredStyle == .actionSheet
 
@@ -457,7 +467,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
         layoutButtons()
     }
 
-    private func layoutMainFrames() {
+    private final func layoutMainFrames() {
 
         let consumedHeightForHeaderArea = calcConsumedHeightForHeaderArea()
         let consumedHeightForButtonArea = calcConsumedHeightForButtonArea()
@@ -504,7 +514,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    private func layoutIcon() -> CGFloat {
+    private final func layoutIcon() -> CGFloat {
 
         if icon == nil {
             return topContentVSpace
@@ -521,7 +531,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    private func layoutButtons() {
+    private final func layoutButtons() {
 
         if preferredStyle == .alert && buttons.count == 2 {
 
@@ -578,7 +588,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     // MARK: Subview Height Calculations
 
-    private func calcConsumedHeightForHeaderArea() -> CGFloat {
+    private final func calcConsumedHeightForHeaderArea() -> CGFloat {
 
         return topContentVSpace +
             iconSize.height +
@@ -588,7 +598,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    private func calcConsumedHeightForButtonArea() -> CGFloat {
+    private final func calcConsumedHeightForButtonArea() -> CGFloat {
 
         if displayAsActionSheetWithCancel {
 
@@ -609,7 +619,7 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    private func calcConsumedHeightForBottomBlurView() -> CGFloat {
+    private final func calcConsumedHeightForBottomBlurView() -> CGFloat {
 
         return displayAsActionSheetWithCancel ? buttonHeight : 0
 
@@ -617,7 +627,8 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     // MARK: Keyboard Handling
 
-    func keyboardWillShow(notification: NSNotification) {
+    @objc
+    private final func keyboardWillShow(notification: NSNotification) {
 
         guard let userInfo = notification.userInfo,
             let endKeyBoardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect,
@@ -645,7 +656,8 @@ public class AlertController: UIViewController, UITextFieldDelegate {
         )
     }
 
-    func keyboardWillHide(notification: NSNotification) {
+    @objc
+    private final func keyboardWillHide(notification: NSNotification) {
 
         // This could happen on the simulator (keyboard will be hidden)
         guard isKeyboardShown else { return }
@@ -658,21 +670,13 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    //Dismiss keyboard when tapped outside textfield
-    func dismissKeyboard() {
+    // Dismiss keyboard when tapped outside textfield
+    @objc
+    private final func dismissKeyboard() {
         view.endEditing(true)
     }
 
-    // MARK: TextField Events
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeField = textField
-    }
-
-    public func textFieldDidEndEditing(_ textField: UITextField) {
-        activeField = nil
-    }
-
-    private func buttonForAction(action: AlertAction) -> AlertButton {
+    private final func buttonForAction(action: AlertAction) -> AlertButton {
 
         let globalTint = UIApplication.shared.delegate?.window??.tintColor ?? .white
 
@@ -699,7 +703,8 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
     }
 
-    public func buttonTapped(button: AlertButton) {
+    @objc
+    private final func buttonTapped(button: AlertButton) {
 
         self.dismiss(animated: true) { () -> Void in
 
@@ -709,6 +714,18 @@ public class AlertController: UIViewController, UITextFieldDelegate {
 
         }
     }
+}
+
+// MARK: - UITextFieldDelegate
+extension AlertController: UITextFieldDelegate {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeField = textField
+    }
+
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        activeField = nil
+    }
+
 }
 
 // MARK: - UIViewControllerTransitioningDelegate

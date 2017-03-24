@@ -29,8 +29,6 @@ class ViewController: UIViewController {
         let alertController = AlertController(
             title: "Title",
             message: "Lorem Ipsum",
-            icon: nil,
-            preferredStyle: .alert,
             blurStyle: .extraLight
         )
 
@@ -50,9 +48,7 @@ class ViewController: UIViewController {
 
         let alertController = AlertController(
             title: "Title",
-            message: "Lorem Ipsum",
-            icon: nil,
-            preferredStyle: .alert
+            message: "Lorem Ipsum"
         )
 
         alertController.addAction(
@@ -81,29 +77,24 @@ class ViewController: UIViewController {
             title: "Title",
             message: "Lorem Ipsum",
             icon: #imageLiteral(resourceName: "Icon"),
-            preferredStyle: UIAlertControllerStyle.alert,
+            preferredStyle: .alert,
             blurStyle: .dark
         )
 
-        alertController.addAction(action: AlertAction(title: "Default", style: .default, handler: { (_) -> Void in
+        alertController.addAction(action: AlertAction(title: "Default", style: .default))
 
-        }))
-
-        alertController.addAction(action: AlertAction(title: "Cancel", style: .cancel, handler: { (_) -> Void in
-
-        }))
+        alertController.addAction(action: AlertAction(title: "Cancel", style: .cancel))
 
         alertController.addAction(
-            action: AlertAction(title: "Destructive", style: .destructive, handler: nil)
+            action: AlertAction(title: "Destructive", style: .destructive)
         )
 
         alertController.addTextFieldWithConfigurationHandler { (_) -> Void in
 
         }
 
-        present(alertController, animated: true) { () -> Void in
+        present(alertController, animated: true)
 
-        }
     }
 
     func presentAlertControllerWithActionSheetStyle() {
@@ -111,20 +102,20 @@ class ViewController: UIViewController {
         let alertController = AlertController(
             title: "Title",
             message: "Lorem Ipsum",
-            icon: nil,
             preferredStyle: .actionSheet
         )
 
         alertController.addAction(
-            action: AlertAction(title: "Default", style: .default, handler: nil)
+            action: AlertAction(title: "Default", style: .default)
         )
 
         alertController.addAction(
-            action: AlertAction(title: "Cancel", style: .cancel, handler: nil)
+            action: AlertAction(title: "Cancel", style: .cancel)
         )
 
         alertController.addAction(
-            action: AlertAction(title: "Destructive", style: .destructive, handler: nil))
+            action: AlertAction(title: "Destructive", style: .destructive)
+        )
 
         present(alertController, animated: true)
 
