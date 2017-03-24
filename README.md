@@ -6,23 +6,46 @@ iOS AlertController
 
 ## Example
 ```swift
-
-let alertController = AlertController(title: "Title", message: "Lorem Ipsum", icon: UIImage(named: "Icon"), preferredStyle: UIAlertControllerStyle.Alert, blurStyle: .Dark)
+// Create a new AlertController
+let alertController = AlertController(
+	title: "Title", 
+	message: "Lorem Ipsum", 
+	icon: UIImage(named: "Icon"), 
+	preferredStyle: .alert, 
+	blurStyle: .dark
+)
       
 // Adding Buttons
-alertController.addAction(AlertAction(title: "Default", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-}))
-alertController.addAction(AlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
-}))
-alertController.addAction(AlertAction(title: "Destructive", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
-}))
+alertController.addAction(
+	AlertAction(title: "Default", style: .default)
+)
+
+alertController.addAction(
+	AlertAction(
+		title: "Cancel", 
+		style: .cancel, 
+		handler: { action in
+			// Cancel something
+		}
+	)
+)
+
+alertController.addAction(
+	AlertAction(
+		title: "Destructive", 
+		style: .destructive, 
+		handler: { action in
+			// Destroy everything
+		}
+	)
+)
 
 // Adding Text Field
-alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
+alertController.addTextFieldWithConfigurationHandler { textField  in
+	// Configure textField
 }
 
 // Present Alert Controller
-self.presentViewController(alertController, animated: true) { () -> Void in
-}
+present(alertController, animted: true)
 
 ```
